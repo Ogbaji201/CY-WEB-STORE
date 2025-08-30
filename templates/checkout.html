@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Sports Jersey Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #0052a3;
+            --text-color: #333;
+            --light-text: #555;
+            --background-color: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding-bottom: 50px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .checkout-header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+        
+        .checkout-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        /* Checkout Layout */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Forms */
+        .checkout-form {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        /* Order Summary */
+        .order-summary {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .order-summary h2 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+        
+        .order-items {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .order-item {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .order-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+        
+        .order-item-details {
+            flex: 1;
+        }
+        
+        .order-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .order-item-meta {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+        
+        .order-item-price {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .order-item-total {
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        .order-totals {
+            margin-top: 20px;
+        }
+        
+        .order-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .order-total-row.final {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Payment Methods */
+        .payment-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .payment-method input {
+            margin-right: 15px;
+        }
+        
+        .payment-method-label {
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-method-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        /* Submit Button */
+        .submit-order {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .submit-order:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .submit-order:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Error/Success Messages */
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.error input,
+        .form-group.error select,
+        .form-group.error textarea {
+            border-color: var(--error-color);
+        }
+        
+        .form-group.error .error-message {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Checkout Header -->
+    <header class="checkout-header">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ url_for('serve_homepage') }}">
+                    <img src="{{ url_for('static', path='image/Cy-Logo.jpeg') }}" alt="Logo">
+                    <span class="logo-text">Sports Jersey</span>
+                </a>
+            </div>
+            <div class="checkout-progress">
+                <span>Checkout</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="checkoutForm" class="checkout-grid">
+            <!-- Shipping Information -->
+            <div class="checkout-form">
+                <h1>Checkout</h1>
+                
+                <div class="form-section">
+                    <h2>Shipping Information</h2>
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="customer_name" required>
+                        <div class="error-message">Please enter your full name</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="customer_email" required>
+                        <div class="error-message">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="customer_phone" required>
+                        <div class="error-message">Please enter a valid phone number</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Shipping Address</label>
+                        <textarea id="address" name="customer_address" rows="3" required></textarea>
+                        <div class="error-message">Please enter your shipping address</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" required>
+                            <div class="error-message">Please enter your city</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="zipCode">ZIP/Postal Code</label>
+                            <input type="text" id="zipCode" name="zip_code" required>
+                            <div class="error-message">Please enter your ZIP code</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select id="country" name="country" required>
+                            <option value="">Select Country</option>
+                            <option value="US">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="NG">Nigeria</option>
+                            <option value="CA">Canada</option>
+                            <option value="GH">Ghana</option>
+                        </select>
+                        <div class="error-message">Please select your country</div>
+                    </div>
+                </div>
+                
+                <!-- Payment Method -->
+                <div class="form-section">
+                    <h2>Payment Method</h2>
+                    
+                    <div class="payment-method">
+                        <input type="radio" id="creditCard" name="payment_method" value="credit_card" checked>
+                        <label for="creditCard" class="payment-method-label">
+                            <span class="payment-method-icon"><i class="far fa-credit-card"></i></span>
+                            <span>Credit/Debit Card</span>
+                        </label>
+                    </div>
+                    
+                    <div class="payment-method">
+                        <input type="radio" id="paypal" name="payment_method" value="paypal">
+                        <label for="paypal" class="payment-method-label">
+                            <span class="payment-method-icon"><i class="fab fa-paypal"></i></span>
+                            <span>PayPal</span>
+                        </label>
+                    </div>
+                    
+                    <div class="payment-method">
+                        <input type="radio" id="bankTransfer" name="payment_method" value="bank_transfer">
+                        <label for="bankTransfer" class="payment-method-label">
+                            <span class="payment-method-icon"><i class="fas fa-university"></i></span>
+                            <span>Bank Transfer</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Credit Card Details -->
+                <div id="creditCardDetails">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                            <div class="error-message">Please enter a valid card number</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY">
+                            <div class="error-message">Please enter a valid expiry date</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123">
+                            <div class="error-message">Please enter a valid CVV</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cardName">Name on Card</label>
+                        <input type="text" id="cardName" placeholder="John Doe">
+                        <div class="error-message">Please enter the name on your card</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h2>Your Order</h2>
+                
+                <div class="order-items" id="orderItemsContainer">
+                    <!-- Cart items will be dynamically inserted here -->
+                </div>
+                
+                <div class="order-totals">
+                    <div class="order-total-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">₦0.00</span>
+                    </div>
+                    <div class="order-total-row">
+                        <span>Shipping</span>
+                        <span id="shipping">₦0.00</span>
+                    </div>
+                    <div class="order-total-row">
+                        <span>Tax</span>
+                        <span id="tax">₦0.00</span>
+                    </div>
+                    <div class="order-total-row final">
+                        <span>Total</span>
+                        <span id="total">₦0.00</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-order" id="submitOrder">
+                    <span id="submitText">Place Order</span>
+                </button>
+                
+                <p class="secure-checkout">
+                    <i class="fas fa-lock"></i> Secure checkout
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load cart from localStorage
+        const cart = JSON.parse(localStorage.getItem('sports_jersey_cart')) || [];
+        const orderItemsContainer = document.getElementById('orderItemsContainer');
+        const subtotalElement = document.getElementById('subtotal');
+        const shippingElement = document.getElementById('shipping');
+        const taxElement = document.getElementById('tax');
+        const totalElement = document.getElementById('total');
+
+        // Attach form submit handler
+        const form = document.getElementById('checkoutForm');
+        if (form) {
+            form.addEventListener('submit', handleOrderSubmission);
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            const num = typeof amount === 'number' ? amount : parseFloat(amount) || 0;
+            return '₦' + num.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Render cart
+        if (cart.length === 0) {
+            orderItemsContainer.innerHTML = '<p>Your cart is empty</p>';
+            return;
+        }
+
+        let subtotal = 0;
+        orderItemsContainer.innerHTML = cart.map(item => {
+            const price = parseFloat(item.price);
+            const quantity = parseInt(item.quantity) || 1;
+            const itemTotal = price * quantity;
+            subtotal += itemTotal;
+            return `
+                <div class="order-item">
+                    <img src="/static/${item.image}" alt="${item.name}">
+                    <div class="order-item-details">
+                        <div class="order-item-name">${item.name}</div>
+                        <div class="order-item-meta">Size: ${item.size || 'N/A'}</div>
+                        <div class="order-item-price">${formatCurrency(price)} × ${quantity}</div>
+                        <div class="order-item-total">${formatCurrency(itemTotal)}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Totals
+        const shipping = subtotal > 10000 ? 0 : 1000;
+        const tax = subtotal * 0.075;
+        const total = subtotal + shipping + tax;
+
+        subtotalElement.textContent = formatCurrency(subtotal);
+        shippingElement.textContent = formatCurrency(shipping);
+        taxElement.textContent = formatCurrency(tax);
+        totalElement.textContent = formatCurrency(total);
+
+        // Toggle credit card details based on payment method
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const creditCardDetails = document.getElementById('creditCardDetails');
+                if (this.value === 'credit_card') {
+                    creditCardDetails.style.display = 'block';
+                } else {
+                    creditCardDetails.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    async function handleOrderSubmission(e) {
+        e.preventDefault();
+
+        // Optional: Add form validation logic here
+        // if (!validateForm()) return;
+
+        const cart = JSON.parse(localStorage.getItem('sports_jersey_cart')) || [];
+        const submitButton = document.getElementById('submitOrder');
+        const submitText = document.getElementById('submitText');
+
+        try {
+            submitButton.disabled = true;
+            submitText.innerHTML = '<span class="spinner"></span> Processing Order...';
+
+            const orderData = {
+                items: cart.map(item => ({
+                    id: item.id,
+                    name: item.name,
+                    price: parseFloat(item.price),
+                    quantity: parseInt(item.quantity),
+                    image: item.image,
+                    size: item.size || 'N/A'  // Include size in order data
+                })),
+                customer_name: document.getElementById('fullName').value,
+                customer_email: document.getElementById('email').value,
+                customer_phone: document.getElementById('phone').value,
+                customer_address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                zip_code: document.getElementById('zipCode').value,
+                country: document.getElementById('country').value,
+                payment_method: document.querySelector('input[name="payment_method"]:checked').value,
+                total_amount: parseFloat(document.getElementById('total').textContent.replace(/[^0-9.]/g, ''))
+            };
+
+            console.log('Submitting order:', orderData);
+
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.detail || 'Failed to place order');
+            }
+
+            localStorage.removeItem('sports_jersey_cart');
+            window.location.href = `/order-confirmation/${result.order_id}`;
+        } catch (error) {
+            console.error('Order submission error:', error);
+            alert(`Order failed: ${error.message}`);
+        } finally {
+            submitButton.disabled = false;
+            submitText.textContent = 'Place Order';
+        }
+    }
+    </script>
+
+</body>
+</html>

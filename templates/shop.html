@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Sports Jersey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #0052a3;
+            --text-color: #333;
+            --light-text: #555;
+            --background-color: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px; /* Keep consistent height */
+            margin-right: 10px;
+            /* Ensure image background is transparent if it has one */
+            /* If the image itself has a white background, you might need to use an SVG or PNG with transparency */
+            /* Added object-fit for better image handling */
+            object-fit: contain; 
+            max-width: 50px; /* Prevent it from stretching too wide */
+        }
+        
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+        
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        .main-nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .main-nav a:hover, .main-nav a.active {
+            color: var(--primary-color);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .cart-icon {
+            position: relative;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+        
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: none;
+        }
+        
+        /* Shop Header */
+        .shop-header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .shop-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Shop Controls */
+        .shop-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-text);
+        }
+        
+        .sort-filter {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .sort-filter select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Categories */
+        .categories {
+            margin-bottom: 40px;
+        }
+        
+        .category-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .category-btn {
+            background: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            padding: 8px 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        /* Cart Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: var(--shadow);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-button {
+            color: var(--light-text);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: var(--text-color);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #ddd;
+            background: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .remove-from-cart {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cart-summary {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: right;
+        }
+
+        .cart-summary p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .checkout-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .checkout-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 20px;
+            color: var(--light-text);
+        }
+
+        /* Toast Notification */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1002;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .toast.success {
+            background-color: #28a745;
+        }
+
+        .toast.error {
+            background-color: #dc3545;
+        }
+
+        .toast.info {
+            background-color: #17a2b8;
+        }
+        
+        .add-to-cart {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        .add-to-cart:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Add to your existing CSS */
+        .product-meta i {
+            margin-right: 5px;
+        }
+
+        .in-stock {
+            color: #28a745; /* Green for in stock */
+        }
+
+        .limited {
+            color: #ffc107; /* Yellow for limited edition */
+        }
+
+        .sale {
+            color: #dc3545; /* Red for sale items */
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                padding: 20px;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+            }
+            
+            .main-nav.active {
+                transform: translateY(0);
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .shop-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .shop-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ url_for('serve_homepage') }}">
+                    <img src="{{ url_for('static', path='image/Cy-Logo.jpeg') }}" alt="Sports Jersey" class="logo-image">
+                    <span class="logo-text">Sports Jersey</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('serve_homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('serve_categories') }}">Categories</a></li>
+                    <li><a href="{{ url_for('serve_shop') }}"class="active">Shop</a></li>
+                    <li><a href="{{ url_for('serve_about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('serve_contact') }}">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#cart" class="cart-icon" aria-label="Shopping Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Shop Header -->
+    <header class="shop-header">
+        <div class="container">
+            <h1>Sports Jersey</h1>
+            <p>Find your favorite team's authentic jerseys</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Shop Controls -->
+        <div class="shop-controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search jerseys...">
+            </div>
+            <div class="sort-filter">
+                <select>
+                    <option>Sort by</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Most Popular</option>
+                    <option>Newest</option>
+                </select>
+                <select>
+                    <option>Filter by</option>
+                    <option>Football</option>
+                    <option>Basketball</option>
+                    <option>Baseball</option>
+                    <option>Soccer</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories">
+            <div class="category-list">
+                <div class="category-btn active">All Jerseys</div>
+                <div class="category-btn">Football</div>
+                <div class="category-btn">Basketball</div>
+                <div class="category-btn">Soccer</div>
+                <div class="category-btn">Baseball</div>
+                <div class="category-btn">Hockey</div>
+                <div class="category-btn">Custom</div>
+                <div class="category-btn">Sale</div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+<div class="products-grid">
+    <!-- Product 1 - Using js.jpeg -->
+    <div class="product-card">
+        <div class="product-image" style="background-image: url('/static/image/j17.jpeg');"></div>
+        <div class="product-info">
+            <h3 class="product-title">NFL Team Jersey</h3>
+            <div class="product-price">₦899.99</div>
+            <div class="product-meta">
+                <span>Football</span>
+                <span>In Stock</span>
+            </div>
+        
+        <div class="size-selector" style="margin: 10px 0;">
+            <label for="size-jersey1" style="font-size: 0.9rem; color: #555;">Size:</label>
+            <select id="size-jersey1" class="size-dropdown" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+            </select>
+        </div>
+            <button class="add-to-cart"
+                    data-id="jersey1"
+                    data-name="NFL Team Jersey"
+                    data-price="899.99"
+                    data-image="image/j17.jpeg">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Product 2 - Using j9.jpeg -->
+    <div class="product-card">
+        <div class="product-image" style="background-image: url('/static/image/Slim_Jeans.jpeg');"></div>
+        <div class="product-info">
+            <h3 class="product-title">NBA Team Jersey</h3>
+            <div class="product-price">₦709.99</div>
+            <div class="product-meta">
+                <span>Basketball</span>
+                <span>In Stock</span>
+            </div>
+
+        <div class="size-selector" style="margin: 10px 0;">
+            <label for="size-jersey2" style="font-size: 0.9rem; color: #555;">Size:</label>
+            <select id="size-jersey2" class="size-dropdown" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+            </select>
+        </div>
+            <button class="add-to-cart" 
+                    data-id="jersey2" 
+                    data-name="NBA Team Jersey" 
+                    data-price="709.99" 
+                    data-image="image/Slim_Jeans.jpeg">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Product 3 - Using j10.jpeg -->
+    <div class="product-card">
+        <div class="product-image" style="background-image: url('/static/image/j4.jpeg');"></div>
+        <div class="product-info">
+            <h3 class="product-title">Baseball Jersey</h3>
+            <div class="product-price">₦84.99</div>
+            <div class="product-meta">
+                <span>Baseball</span>
+                <span>In Stock</span>
+            </div>
+        <div class="size-selector" style="margin: 10px 0;">
+            <label for="size-jersey3" style="font-size: 0.9rem; color: #555;">Size:</label>
+            <select id="size-jersey3" class="size-dropdown" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+            </select>
+        </div>
+            <button class="add-to-cart" 
+                    data-id="jersey3" 
+                    data-name="Baseball Jersey" 
+                    data-price="84.99" 
+                    data-image="image/j4.jpeg">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Product 4 - Using j11.jpeg -->
+    <div class="product-card">
+        <div class="product-image" style="background-image: url('/static/image/j8.jpeg');"></div>
+        <div class="product-info">
+            <h3 class="product-title">Premier League Jersey</h3>
+            <div class="product-price">₦74.99</div>
+            <div class="product-meta">
+                <span>Soccer</span>
+                <span>In Stock</span>
+            </div>
+        <div class="size-selector" style="margin: 10px 0;">
+            <label for="size-jersey4" style="font-size: 0.9rem; color: #555;">Size:</label>
+            <select id="size-jersey4" class="size-dropdown" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+            </select>
+        </div>
+            <button class="add-to-cart" 
+                    data-id="jersey4" 
+                    data-name="Premier League Jersey" 
+                    data-price="74.99" 
+                    data-image="image/j8.jpeg">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Product 5 - Using j12.jpeg -->
+    <div class="product-card">
+        <div class="product-image" style="background-image: url('/static/image/j13.jpeg');"></div>
+        <div class="product-info">
+            <h3 class="product-title">NHL Team Jersey</h3>
+            <div class="product-price">₦94.99</div>
+            <div class="product-meta">
+                <span>Hockey</span>
+                <span>In Stock</span>
+            </div>
+        <div class="size-selector" style="margin: 10px 0;">
+            <label for="size-jersey5" style="font-size: 0.9rem; color: #555;">Size:</label>
+            <select id="size-jersey5" class="size-dropdown" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+            </select>
+        </div>
+            <button class="add-to-cart" 
+                    data-id="jersey5" 
+                    data-name="NHL Team Jersey" 
+                    data-price="94.99" 
+                    data-image="image/j13.jpeg">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Product 6 - Using j13.jpeg -->
+    <div class="product-card">
+        <div class="product-image" style="background-image: url('/static/image/j12.jpeg');"></div>
+        <div class="product-info">
+            <h3 class="product-title">Pro Ice Hockey Jersey</h3>
+            <div class="product-price">₦12,499.99</div>
+            <div class="product-meta">
+                <span><i class="fas fa-hockey-puck"></i> Hockey</span>
+                <span class="in-stock"><i class="fas fa-check-circle"></i> In Stock</span>
+            </div>
+        <div class="size-selector" style="margin: 10px 0;">
+            <label for="size-jersey6" style="font-size: 0.9rem; color: #555;">Size:</label>
+            <select id="size-jersey6" class="size-dropdown" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+            </select>
+        </div>
+            <button class="add-to-cart" 
+                    data-id="jersey6" 
+                    data-name="Pro Ice Hockey Jersey" 
+                    data-price="12,499.99" 
+                    data-image="image/j12.jpeg">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Product 7 - Using j14.jpeg -->
+    <div class="product-card">
+        <div class="product-image" style="background-image: url('/static/image/polo10.jpeg');"></div>
+        <div class="product-info">
+            <h3 class="product-title">Retro Vintage Tee</h3>
+            <div class="product-price">₦7,999.99</div>
+            <div class="product-meta">
+                <span><i class="fas fa-star"></i> Vintage</span>
+                <span class="limited"><i class="fas fa-fire"></i> Limited Edition</span>
+            </div>
+        <div class="size-selector" style="margin: 10px 0;">
+            <label for="size-jersey7" style="font-size: 0.9rem; color: #555;">Size:</label>
+            <select id="size-jersey7" class="size-dropdown" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+            </select>
+        </div>
+            <button class="add-to-cart" 
+                    data-id="jersey7" 
+                    data-name="Retro Vintage Tee" 
+                    data-price="7,999.99" 
+                    data-image="image/polo10.jpeg">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Product 8 - Using Mancity.jpeg -->
+    <div class="product-card">
+        <div class="product-image" style="background-image: url('/static/image/Mancity.jpeg');"></div>
+        <div class="product-info">
+            <h3 class="product-title">Manchester City Jersey</h3>
+            <div class="product-price">₦99.99</div>
+            <div class="product-meta">
+                <span>Soccer</span>
+                <span>In Stock</span>
+            </div>
+        <div class="size-selector" style="margin: 10px 0;">
+            <label for="size-jersey8" style="font-size: 0.9rem; color: #555;">Size:</label>
+            <select id="size-jersey8" class="size-dropdown" style="width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+            </select>
+        </div>
+            <button class="add-to-cart" 
+                    data-id="jersey8" 
+                    data-name="Manchester City Jersey" 
+                    data-price="99.99" 
+                    data-image="image/Mancity.jpeg">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</div>
+    
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Sports Jersey. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+
+<!-- Cart Modal -->
+<div id="cart-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Your Shopping Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-summary">
+            <p>Total: <span id="cart-total">0.00</span></p>
+            <button id="checkout-button" class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="{{ url_for('static', path='Script1.js') }}"></script>
+
+</html>

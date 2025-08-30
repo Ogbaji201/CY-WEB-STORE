@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Sports Jersey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #0052a3;
+            --text-color: #333;
+            --light-text: #555;
+            --background-color: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px; /* Keep consistent height */
+            margin-right: 10px;
+            /* Ensure image background is transparent if it has one */
+            /* If the image itself has a white background, you might need to use an SVG or PNG with transparency */
+            /* Added object-fit for better image handling */
+            object-fit: contain; 
+            max-width: 50px; /* Prevent it from stretching too wide */
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.5rem; /* Increased font size for prominence */
+            color: var(--text-color); /* Inherit from body or specific color */
+            text-decoration: none; /* Ensure no underline from parent 'a' tag */
+            white-space: nowrap; /* Keep text on one line */
+        }
+        /* Style for the logo link container itself */
+        .logo a {
+            text-decoration: none; /* Remove underline from the entire logo link */
+            color: inherit; /* Inherit color, then let logo-text define it */
+            display: flex; /* Make the anchor a flex container for img and span */
+            align-items: center; /* Vertically align them */
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 10px 15px;
+            font-weight: 500;
+        }
+
+        .main-nav a.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Fix layout for header container */
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .main-nav ul li {
+            margin-left: 20px;
+        }
+
+
+        .cart-icon {
+            position: relative;
+            margin-right: 20px;
+            color: var(--text-color);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            margin-top: 60px; /* Add margin-top to account for fixed header */
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            color: var(--text-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .contact-info, .contact-form-wrapper {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-info h3, .contact-form-wrapper h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #222;
+        }
+        
+        .contact-info p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--light-text);
+        }
+        
+        .contact-info i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+                
+        .checkout-btn {
+            background-color: #0066cc;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #0052a3;
+        }
+        .social-links {
+            margin-top: 30px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin-right: 15px;
+            color: var(--light-text);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        /* Contact Form */
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+        
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Google Maps */
+        .map-container {
+            height: 400px;
+            margin-top: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #222;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column; /* Stack logo, nav, actions */
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                margin-top: 10px;
+                width: 100%;
+                align-items: flex-start;
+            }
+            .main-nav ul li {
+                margin-left: 0;
+                margin-bottom: 5px;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: flex-end; /* Push cart/toggle to right */
+            }
+            .menu-toggle {
+                display: block; /* Show menu toggle button */
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .contact-info, .contact-form-wrapper {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ url_for('serve_homepage') }}">
+                    <!-- Ensure the image path is correct and accessible -->
+                    <img src="{{ url_for('static', path='image/Cy-Logo.jpeg') }}" alt="Sports Jersey Store Logo">
+                    <span class="logo-text">Sports Jersey</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('serve_homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('serve_categories') }}">Categories</a></li>
+                    <li><a href="{{ url_for('serve_shop') }}">Shop</a></li>
+                    <li><a href="{{ url_for('serve_about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('serve_contact') }}" class="active">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="#cart" class="cart-icon" aria-label="Shopping Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Sports Jersey</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Our Details</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Mandillas Market, Lagos Island, Nigeria</p>
+                    <p><i class="fas fa-envelope"></i> info@sportsjersey.com</p> 
+                    <p><i class="fas fa-phone"></i> +234 906 762 5248</p>
+                    <p><i class="fas fa-clock"></i> Monday - Saturday: 9:00 AM - 6:00 PM</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://wa.me/2349067625248" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <h3>Send Us a Message</h3>
+                    <form class="contact-form" id="contactForm" method="POST" action="/api/contact">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="tel" name="phone" placeholder="Your Phone Number">
+                        <textarea name="message" placeholder="How can we help you?" rows="5" required></textarea>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Google Maps Integration -->
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.585444823049!2d3.396278315231632!3d6.447974595338696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8b2ae68280c1%3A0xdc9e87a367c3d9cb!2sMandilas%20Market!5e0!3m2!1sen!2sng!4v1620000000000!5m2!1sen!2sng" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    aria-label="Our Location on Google Maps">
+                </iframe>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Footer Section -->     
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Sports Jersey Store. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p> <!-- Changed copyright to Sports Jersey Store -->
+        </div>
+    </footer>
+
+    
+
+   <script src="{{ url_for('static', path='Script1.js') }}"></script>
+</body>
+</html>

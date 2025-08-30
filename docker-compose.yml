@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - SMTP_USER=ogbaji201@gmail.com
+      - SMTP_PASSWORD='SMTP_PASSWORD'
+      - DATABASE_URL="sqlite:///./jersey_store.db"
+    volumes:
+      - .:/app
+    restart: unless-stopped
+
+  # Add database service if needed (example with PostgreSQL)
+  # db:
+  #   image: postgres:13
+  #   environment:
+  #     - POSTGRES_DB=cywebstore
+  #     - POSTGRES_USER=admin
+  #     - POSTGRES_PASSWORD=password
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+# volumes:
+#   postgres_data:

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Order Confirmation</title></head>
+<body>
+  <h2>Order Confirmation - {{ order.order_id }}</h2>
+  <p>Hi {{ order.customer_name }},</p>
+  <p>Thank you for your order! Here are your details:</p>
+  <p><strong>Order placed:</strong> {{ order.created_at|datetimeformat }}</p>
+
+  <h3>Shipping Info:</h3>
+  <p>{{ order.customer_address }}, {{ order.city }}, {{ order.zip_code }}, {{ order.country }}</p>
+
+  <h3>Items:</h3>
+  <ul>
+    {% for item in order_items %}
+      <li>{{ item.quantity }} × {{ item.name }} - ₦{{ "{:,.2f}".format(item.subtotal) }}</li>
+    {% endfor %}
+  </ul>
+
+  <p><strong>Total:</strong> ₦{{ "{:,.2f}".format(order.total_amount) }}</p>
+
+
+  <p>We’ll keep you updated as your order ships.</p>
+  <p>– Sports Jersey Store</p>
+</body>
+</html>

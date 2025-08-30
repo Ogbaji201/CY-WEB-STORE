@@ -1,0 +1,12 @@
+
+fastapi
+uvicorn
+pydantic
+jinja2
+python-multipart
+dotenv
+pydantic-settings
+sqlalchemy
+reportlab
+email-validator
+python-dotenv

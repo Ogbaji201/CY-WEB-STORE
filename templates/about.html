@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Sports Jersey</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='StyleSheet1.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', path='image/Cy-Logo.jpeg') }}" type="image/jpeg">
+    <style>
+        /* --- Inline CSS Styles (About Page Specific) --- */            
+        /* About Page Specific Styles */
+   
+        .about-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url("{{ url_for('static', path='image/about-bg.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .about-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .founder-section {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            padding: 80px 0;
+        }
+        
+        .founder-image {
+            flex: 1;
+            position: relative;
+            min-width: 300px;
+        }
+        
+        .founder-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .founder-badge {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e63946;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+        }
+        
+        .founder-content {
+            flex: 1;
+        }
+        
+        .founder-quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #555;
+            border-left: 4px solid #e63946;
+            padding-left: 20px;
+            margin: 30px 0;
+        }
+        
+        .milestones {
+            background: #f9f9f9;
+            padding: 80px 0;
+        }
+        
+        .milestone-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .milestone-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .milestone-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .milestone-icon {
+            font-size: 2.5rem;
+            color: #e63946;
+            margin-bottom: 20px;
+        }
+        
+        .team-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .team-member {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 5px solid #f0f0f0;
+        }
+        
+        @media (max-width: 768px) {
+            .founder-section {
+                flex-direction: column;
+            }
+            
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+  
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ url_for('serve_homepage') }}">
+                    <img src="{{ url_for('static', path='image/Cy-Logo.jpeg') }}" alt="Logo">
+                    <span class="logo-text">Sports Jersey</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('serve_homepage') }}">Home</a></li>
+                    <li><a href="{{ url_for('serve_categories') }}">Categories</a></li>
+                    <li><a href="{{ url_for('serve_shop') }}">Shop</a></li>
+                    <li><a href="{{ url_for('serve_about') }}" class="active">About Us</a></li>
+                    <li><a href="{{ url_for('serve_contact') }}">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="#cart" class="cart-icon" aria-label="Shopping Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>Our Story</h1>
+            <p>From a small market stall to Lagos' premier sports fashion destination - the journey of passion, quality, and Nigerian excellence</p>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section class="container founder-section">
+        <div class="founder-image">
+            <img src="{{ url_for('static', path='image/cyril-udeh.JPG') }}"
+                 alt="Cypril Udeh - Founder & CEO"
+                 <!-- onerror="this.onerror=null; this.src='{{ url_for('static', path='image/cyril-udeh.JPG') }}';"> -->
+            <div class="founder-badge">
+                <i class="fas fa-crown"></i> Founder & CEO
+            </div>
+        </div>
+
+        <div class="founder-content">
+            <h2>Meet Cypril Udeh</h2>
+            <p>
+                Born in 1992 in the heart of Lagos State, Cypril's journey began with a deep love for sports and an eye for fashion. 
+                After graduating with honors in Corporate Management Economics from Nnamdi Azikiwe University (UNIZIK), he combined his 
+                academic knowledge with his entrepreneurial spirit.
+            </p>
+            <p>
+                In 2015, with just a small kiosk in Mandillas Market and a vision to redefine sports fashion, Cypril laid the foundation 
+                for what would become Sports Jersey. His unique approach blended premium quality with streetwear aesthetics, creating 
+                jerseys that resonated with both athletes and fashion enthusiasts.
+            </p>
+            <blockquote class="founder-quote">
+                "We don't just sell jerseys - we craft confidence. Every stitch tells a story of Nigerian excellence."
+            </blockquote>
+            <p>
+                Today, Cypril leads a team of passionate designers and sports enthusiasts, constantly pushing boundaries to deliver 
+                innovative designs that celebrate both athletic performance and street style.
+            </p>
+        </div>
+    </section>
+
+    <!-- Milestones Section -->
+    <section class="milestones">
+        <div class="container">
+            <h2 class="section-title">Our Journey</h2>
+            <p class="section-subtitle">Key milestones in our growth story</p>
+            <div class="milestone-grid">
+                <div class="milestone-card">
+                    <div class="milestone-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>2015</h3>
+                    <p>Founded in Mandillas Market with a single kiosk selling basic jerseys</p>
+                </div>
+                <div class="milestone-card">
+                    <div class="milestone-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>2017</h3>
+                    <p>Launched our first original designs, blending sports and streetwear</p>
+                </div>
+                <div class="milestone-card">
+                    <div class="milestone-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>2019</h3>
+                    <p>Expanded to a full store with a team of 5 passionate staff members</p>
+                </div>
+                <div class="milestone-card">
+                    <div class="milestone-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>2022</h3>
+                    <p>Recognized as Lagos' fastest-growing sports fashion brand</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section container">
+        <h2 class="section-title">Our Dream Team</h2>
+        <p class="section-subtitle">The passionate individuals behind Sports Jersey</p>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="{{ url_for('static', path='image\cyril-udeh.JPG') }}" alt="Design Lead">
+                <h3>Amara Okeke</h3>
+                <p>Head Designer</p>
+                <p>Bringing innovative designs to life since 2018</p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', path='image\cyril-udeh.JPG') }}" alt="Operations Manager">
+                <h3>Emeka Nwankwo</h3>
+                <p>Operations Manager</p>
+                <p>Ensuring seamless customer experiences</p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', path='image\cyril-udeh.JPG') }}" alt="Marketing Head">
+                <h3>Chioma Adeleke</h3>
+                <p>Marketing Director</p>
+                <p>Connecting our brand with sports communities</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section" style="background: #e63946; color: white; padding: 80px 0; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Our Mission</h2>
+            <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+                To revolutionize sports fashion by creating premium, trend-setting jerseys that empower athletes and style enthusiasts 
+                to express their passion with confidence, while maintaining our roots in Nigerian quality and craftsmanship.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2025 Sports Jersey. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', path='Script1.js') }}"></script>
+</body>
+</html>
+

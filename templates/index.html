@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Jersey - Trendy Fashion & Sportswear</title>
+    <!-- Main CSS for the website layout and styling -->
+    <link rel="stylesheet" href="{{ url_for('static', path='StyleSheet1.css') }}">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Font - Inter for a modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', path='image/Cy-Logo.jpeg') }}" type="image/jpeg">
+    <style>
+        /* Additional styles for size selector */
+        .size-selector {
+            margin: 10px 0;
+        }
+        .size-selector label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .size-selector select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ url_for('serve_homepage') }}">
+                    <img src="{{ url_for('static', path='image/Cy-Logo.jpeg') }}" alt="Logo">
+                    <span class="logo-text">Sports Jersey</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{{ url_for('serve_homepage') }}" class="active">Home</a></li>
+                    <li><a href="{{ url_for('serve_categories') }}">Categories</a></li>
+                    <li><a href="{{ url_for('serve_shop') }}">Shop</a></li>
+                    <li><a href="{{ url_for('serve_about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('serve_contact') }}">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#cart" class="cart-icon" aria-label="Shopping Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- Image Slider Section -->
+    <div class="slider">
+        <div class="slides">
+            <img src="{{ url_for('static', path='image/j1.jpeg') }}" alt="Slide 1">
+            <img src="{{ url_for('static', path='image/j11.jpeg') }}" alt="Slide 2">
+            <img src="{{ url_for('static', path='image/Mancity.jpeg') }}" alt="Slide 3">
+            <img src="{{ url_for('static', path='image/polo1.jpeg') }}" alt="Slide 4">
+            <img src="{{ url_for('static', path='image/Slim_Jeans.jpeg') }}" alt="Slide 5">
+            <img src="{{ url_for('static', path='image/White_Jeans.jpeg') }}" alt="Slide 6">
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Unleash Your Style</h1>
+                <p class="lead-text">Discover the latest trends in sporting jerseys, fashionable jeans, trendy T-shirts, polos, and vintage shirts. Elevate your wardrobe with Sports Jersey Store.</p>
+                <a href="{{ url_for('serve_shop') }}" class="btn btn-primary">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section (Multi-Column) -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <h2 class="section-title">Explore Our Collections</h2>
+            <div class="categories-grid">
+                {% set unique_categories = [] %}
+                {% for product in products %}
+                    {% if product.category not in unique_categories %}
+                        <a href="{{ url_for('serve_categories') }}?category={{ product.category|urlencode }}" class="category-card">
+                            <img src="{{ url_for('static', path=product.image) }}" alt="{{ product.category }}" class="category-image">
+                            <div class="category-info">
+                                <h3>{{ product.category }}</h3>
+                                <p>Browse our {{ product.category|lower }} collection</p>
+                            </div>
+                        </a>
+                        {% set _ = unique_categories.append(product.category) %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section (Grid) -->
+    <section class="featured-products-section" id="featured-products">
+        <div class="container">
+            <h2 class="section-title">Our Best Sellers</h2>
+            <div class="products-grid" id="products-container">
+                {% for product in products[:6] %}
+                <div class="product-card">
+                    <img src="{{ url_for('static', path=product.image) }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p class="price">₦{{ "%.2f"|format(product.price) }}</p>
+                    
+                    <!-- Size Selector Dropdown -->
+                    <div class="size-selector">
+                        <label for="size-{{ product.id }}">Size:</label>
+                        <select id="size-{{ product.id }}" class="size-dropdown">
+                            <option value="S">Small (S)</option>
+                            <option value="M">Medium (M)</option>
+                            <option value="L">Large (L)</option>
+                            <option value="XL">Extra Large (XL)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary add-to-cart" 
+                            data-id="{{ product.id }}" 
+                            data-name="{{ product.name }}" 
+                            data-price="{{ product.price }}"
+                            data-image="{{ product.image }}">
+                        Add to Cart
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-12">
+                <a href="{{ url_for('serve_categories') }}" class="btn btn-secondary">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content-grid">
+                <div class="about-image">
+                    <img src="{{ url_for('static', path='image/Cy-Logo.jpeg') }}" alt="About Sports Jersey Store">
+                </div>
+                <div class="about-text">
+                    <h2 class="section-title">Who We Are</h2>
+                    <p>Sports Jersey Store is more than just a clothing brand; it's a lifestyle. Born from a passion for fashion and individuality, we curate a collection that empowers you to express your unique style. We believe in quality, trendsetting designs, and clothing that makes a statement without saying a word.</p>
+                    <p>Our commitment extends beyond just selling clothes. We're dedicated to bringing you the latest trends, ensuring comfort, and providing an unparalleled shopping experience. Join the Sports Jersey community and redefine your style.</p>
+                    <a href="{{ url_for('serve_contact') }}" class="btn btn-primary-outline mt-6">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2>Ready to Elevate Your Style?</h2>
+            <p>Don't miss out on exclusive drops and limited editions. Shop now and experience the Sports Jersey difference!</p>
+            <a href="#featured-products" class="btn btn-primary">Start Shopping</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Contact Details</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Mandillas Market, Lagos Island</p>
+                    <p><i class="fas fa-envelope"></i> info@sportsjersey.com</p>
+                    <p><i class="fas fa-phone"></i> +2349067625248</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <h3>Send Us a Message</h3>
+                    <form class="contact-form" id="contact-form">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2025 Sports Jersey. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div id="cart-items"></div>
+            <p>Total: ₦<span id="cart-total">0.00</span></p>
+            <button id="checkout-button" class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', path='Script1.js') }}"></script>
+</body>
+</html>
